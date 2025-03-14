@@ -85,30 +85,30 @@ def main():
                 # Tambahkan tombol "Prediksi"
                 if st.button("Prediksi", use_container_width=True):
                     # Prediksi kelas gambar
-                    label, confidence_scores = prediction.predict_image(uploaded_file, model)
+                    label, probabilities = prediction.predict_image(uploaded_file, model)
 
                     # Tampilkan hasil prediksi kelas
-                    if max(confidence_scores) > 0.5:
+                    if max(probabilities) > 0.5:
                         st.markdown(f"<h2 style='color: #4CAF50; text-align: center; font-size: 28px'><b>Hasil Prediksi: Kue {label}</b></h2>", unsafe_allow_html=True)
-                        st.write("Confidence Scores:")
+                        st.write("Probabilities untuk masing-masing kelas:")
                         col3, col4 = st.columns(2)
                         half = len(class_labels) // 2
                         with col3:
                             for i in range(half):
-                                st.write(f"{class_labels[i]}: {confidence_scores[i]:.2f}")
+                                st.write(f"{class_labels[i]}: {probabilities[i]:.2f}")
                         with col4:
                             for i in range(half, len(class_labels)):
-                                st.write(f"{class_labels[i]}: {confidence_scores[i]:.2f}")
+                                st.write(f"{class_labels[i]}: {probabilities[i]:.2f}")
                     else:
-                        st.markdown(f"<h2 style='color: #d14d4d; text-align: center; font-size: 28px'><b>Confidence Score tertinggi dibawah 0.5, model tidak cukup yakin dengan hasil prediksi. </b></h2>", unsafe_allow_html=True)
+                        st.markdown(f"<h2 style='color: #d14d4d; text-align: center; font-size: 28px'><b>Probabilitas tertinggi dibawah 0.5, model tidak cukup yakin dengan hasil prediksi. </b></h2>", unsafe_allow_html=True)
                         col3, col4 = st.columns(2)
                         half = len(class_labels) // 2
                         with col3:
                             for i in range(half):
-                                st.write(f"{class_labels[i]}: {confidence_scores[i]:.2f}")
+                                st.write(f"{class_labels[i]}: {probabilities[i]:.2f}")
                         with col4:
                             for i in range(half, len(class_labels)):
-                                st.write(f"{class_labels[i]}: {confidence_scores[i]:.2f}")
+                                st.write(f"{class_labels[i]}: {probabilities[i]:.2f}")
 
 if __name__ == "__main__":
     app = main()

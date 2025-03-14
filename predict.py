@@ -57,5 +57,5 @@ class Predictor:
         img_array = self.preprocess_image(img)
         predictions = model.predict(img_array)
         predicted_class = np.argmax(predictions, axis=1)
-        confidence_scores = predictions[0]
-        return self.class_labels[predicted_class[0]], confidence_scores
+        probabilities = predictions[0]
+        return self.class_labels[predicted_class[0]], probabilities
